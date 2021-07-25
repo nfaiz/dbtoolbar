@@ -30,7 +30,7 @@ Install package via composer:
 In **app/Config** directory<br />
 
 * Modify [Toolbar](#1-toolbar)
-* Create [Library](#2-library)
+* Create [DbToolbar](#2-dbtoolbar)
 
 
 ### 1. Toolbar
@@ -65,7 +65,7 @@ public $sqlCssTheme = [
 
 ```
 
-### 2. Library File
+### 2. DbToolbar
 Create `app/Config/DbToolbar.php` file using;
 
 ```php
@@ -96,5 +96,16 @@ class DbToolbar extends \Nfaiz\DbToolbar\Config\DbToolbar
      * @var string
      */
     public $tabTitle = 'Queries';
+
+    /**
+     * -------------------------------------------------------------
+     * Bottom Margin Between Queries
+     * -------------------------------------------------------------
+     * 
+     * Value in px
+     * 
+     * @var int
+     */
+    public $boxMarginBottom = 4;
 }
 ```
