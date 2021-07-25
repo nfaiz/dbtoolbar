@@ -1,6 +1,6 @@
 {
     "name": "nfaiz/dbtoolbar",
-    "description": "Better SQL syntax highlighter for CodeIgniter 4 Database Debug Toolbar.",
+    "description": "SQL Syntax Highlighter for CodeIgniter 4 Database Debug Toolbar.",
     "keywords": [
         "codeigniter",
         "codeigniter4",
