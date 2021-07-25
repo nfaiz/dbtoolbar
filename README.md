@@ -9,13 +9,13 @@ SQL Syntax Highlighter for CodeIgniter 4 Database Debug Toolbar.
 Alternative SQL Syntax Highlighter for CodeIgniter 4 Database Debug Toolbar <br />
 
 ## Table of contents
-  * [Requirement](Requirement)
+  * [Requirement](#Requirement)
   * [Installation](#installation)
   * [Setup Config File](#setup-config-file)
-    * [Create Library Config File](#create-library-config-file)
+    * [Create Library Config File](#create-dbtoolbar-config-file)
     * [Edit Toolbar](#edit-toolbar)
-      * [Add Collectors Property](#1-add-item-to-collectors-property)
-      * [Add sqlCssTheme property (Optional)](#2-add-sqlcsstheme-property)
+      * [Add Collectors Property](#i-add-item-to-collectors-property)
+      * [Add sqlCssTheme property (Optional)](#ii-add-sqlcsstheme-property)
   * [Configuration](#configuration)
     * [Library Config](#1-library-config)
     * [Disable Default Database Collector](#2-disable-default-database-collector)
