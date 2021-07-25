@@ -14,8 +14,8 @@ Alternative SQL Syntax Highlighter for CodeIgniter 4 Database Debug Toolbar.
   * [Setup Config File](#setup-config-file)
     * [Create Library Config File](#create-dbtoolbar-config-file)
     * [Edit Toolbar](#edit-toolbar)
-      * [Add Collectors Property](#i-add-item-to-collectors-property)
-      * [Add sqlCssTheme property (Optional)](#ii-add-sqlcsstheme-property)
+      * [Add Collectors Property](#i-add-dbtoolbar-collector-to-collectors-property)
+      * [Add sqlCssTheme property (Optional)](#ii-add-sqlcsstheme-and-sqlMarginBottom-property)
   * [Configuration](#configuration)
     * [Library Config](#1-library-config)
     * [Disable Default Database Collector](#2-disable-default-database-collector)
@@ -79,24 +79,13 @@ class DbToolbar extends \Nfaiz\DbToolbar\Config\DbToolbar
      * @var string
      */
     public $tabTitle = 'Queries';
-
-    /**
-     * -------------------------------------------------------------
-     * Bottom Margin Between Queries
-     * -------------------------------------------------------------
-     * 
-     * Value in px
-     * 
-     * @var int
-     */
-    public $boxMarginBottom = 4;
 }
 ```
 
 ### Edit Toolbar
 Open `app/Config/Toolbar.php` file.
 
-#### i. Add Item to Collectors Property
+#### i. Add DbToolbar collector to collectors Property
 Add `\Nfaiz\DbToolbar\Collectors\Database::class` to **$collectors** property
 
 
@@ -115,14 +104,35 @@ public $collectors = [
 ];
 ```
 
-#### ii. Add sqlCssTheme property
-Adding sqlCssTheme to change SQL highlighter is optional. If this property did not exist, it will use default stylesheet theme.
+#### ii. Add sqlCssTheme and sqlMarginBottom property
+Adding sqlCssTheme and sqlMarginBottom in `app/Config/Toolbar.php` are optional.
 
 ```php
+
+/**
+ * -------------------------------------------------------------
+ * SQL CSS Theme
+ * -------------------------------------------------------------
+ * 
+ * Configuration for light and dark mode SQL syntax highlighter.
+ *
+ * @var array
+ */
 public $sqlCssTheme = [
     'light' => 'default',
     'dark'  => 'dark'
 ];
+
+/**
+ * -------------------------------------------------------------
+ * Bottom Margin Between Queries
+ * -------------------------------------------------------------
+ * 
+ * Value in px
+ * 
+ * @var int
+ */
+public $sqlMarginBottom = 4;
 
 ```
 
@@ -139,8 +149,6 @@ To **configure** DbToolbar, open `app/Config/DbToolbar.php`. Change the value ac
 | --- | --- | --- | --- |
 | $collect | To enable/disable DbToolbar collector | Bool | `true` |
 | $tabTitle | Title to display at debug toolbar tab | String | `Queries` |
-| $boxMarginBottom | Bottom Margin Between Queries In px | Integer | `4` |
-
 
 
 ### 2. Disable Default Database Collector

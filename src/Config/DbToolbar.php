@@ -27,15 +27,4 @@ class DbToolbar extends BaseConfig
      * @var string
      */
     public $tabTitle = 'Queries';
-
-    /**
-     * -------------------------------------------------------------
-     * Bottom Margin Between Queries
-     * -------------------------------------------------------------
-     * 
-     * Value in px
-     * 
-     * @var int
-     */
-    public $boxMarginBottom = 4;
 }

@@ -55,13 +55,15 @@ public $collectors = [
 ];
 ```
 
-#### ii. Add $sqlCssTheme property
+#### ii. Add sqlCssTheme and sqlMarginBottom property
 ```php
 
 public $sqlCssTheme = [
     'light' => 'default',
     'dark'  => 'dark'
 ];
+
+public $sqlMarginBottom = 4;
 
 ```
 
@@ -96,16 +98,5 @@ class DbToolbar extends \Nfaiz\DbToolbar\Config\DbToolbar
      * @var string
      */
     public $tabTitle = 'Queries';
-
-    /**
-     * -------------------------------------------------------------
-     * Bottom Margin Between Queries
-     * -------------------------------------------------------------
-     * 
-     * Value in px
-     * 
-     * @var int
-     */
-    public $boxMarginBottom = 4;
 }
 ```

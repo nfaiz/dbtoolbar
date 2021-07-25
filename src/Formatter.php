@@ -111,13 +111,13 @@ class Formatter
      */
     private function getBottomMargin(): int
     {
-        $config = config(DbToolbar::class);
+        $config = config(Toolbar::class);
 
-        if (! isset($config->boxMarginBottom) || ! is_numeric($config->boxMarginBottom))
+        if (! isset($config->sqlMarginBottom) || ! is_numeric($config->sqlMarginBottom))
         {
             return 4;           
         }
 
-        return $config->boxMarginBottom;
+        return $config->sqlMarginBottom;
     }
 }
