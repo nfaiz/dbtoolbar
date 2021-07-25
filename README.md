@@ -6,7 +6,7 @@
 SQL Syntax Highlighter for CodeIgniter 4 Database Debug Toolbar.
 
 ## Description
-Alternative SQL Syntax Highlighter for CodeIgniter 4 Database Debug Toolbar <br />
+Alternative SQL Syntax Highlighter for CodeIgniter 4 Database Debug Toolbar.
 
 ## Table of contents
   * [Requirement](#Requirement)
@@ -133,25 +133,25 @@ Once library installation and setup config files are completed, refresh page to 
 
 
 ### 1. Library Config
-To configure **DbToolbar**, open `app/Config/DbToolbar.php`.
+To **configure** DbToolbar, open `app/Config/DbToolbar.php`. Change the value accordingly.
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | $collect | To enable/disable DbToolbar collector | Bool | `true` |
 | $tabTitle | Title to display at debug toolbar tab | String | `Queries` |
-| $boxMarginBottom | Bottom Margin Between Queries In px | `4` |
+| $boxMarginBottom | Bottom Margin Between Queries In px | Integer | `4` |
 
 
 
 ### 2. Disable Default Database Collector
-To disable default database collector open `app/Config/Events.php` and then `comment` or `remove` code below;
+To **disable** default database collector open `app/Config/Events.php` and then `comment` or `remove` code below;
 
 ```php
 Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
 ```
 
 ### 3. Change Highlighter StyleSheet
-To change highlighter stylesheet, open `app/Config/Toolbar.php`.
+To **change** highlighter stylesheet, open `app/Config/Toolbar.php`.
 
 Find `$sqlCssTheme` property.
 
