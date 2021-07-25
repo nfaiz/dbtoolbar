@@ -1,0 +1,37 @@
+{
+    "name": "nfaiz/dbtoolbar",
+    "description": "Better SQL syntax highlighter for CodeIgniter 4 Database Debug Toolbar.",
+    "keywords": [
+        "codeigniter",
+        "codeigniter4",
+        "highlight.php",
+        "debug",
+        "toolbar",
+        "database",
+        "sql",
+        "syntax"
+    ],
+    "homepage": "https://github.com/nfaiz/dbtoolbar",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Noorulfaiz Ateman",
+            "homepage": "http://www.ukm.my/faiz",
+            "role": "Project Author"
+        }
+    ],
+    "require": {
+        "scrivo/highlight.php": "^9.18",
+        "codeigniter4/framework": "^4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nfaiz\\DbToolbar\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Nfaiz\\DbToolbar\\": "src/"
+        }
+    }
+}
