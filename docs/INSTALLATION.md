@@ -17,7 +17,7 @@ $psr4 = [
     'Nfaiz\DbToolbar' => APPPATH . 'ThirdParty\ci4-dbtoolbar\src',
 ];
 ```
-See [namespace](https://www.codeigniter.com/user_guide/general/modules.html#namespaces) for more information.
+See [modules namespaces](https://www.codeigniter.com/user_guide/general/modules.html#namespaces) for more information.
 
 ### 2. Install Highlight.php
 Install package via composer:
@@ -55,16 +55,33 @@ public $collectors = [
 ];
 ```
 
-#### ii. Add sqlCssTheme and sqlMarginBottom property
+#### ii. Add queryTheme and queryMarginBottom property
 ```php
 
-public $sqlCssTheme = [
+/**
+ * -------------------------------------------------------------
+ * Query Theme
+ * -------------------------------------------------------------
+ * 
+ * Configuration for light and dark mode SQL syntax highlighter.
+ *
+ * @var array
+ */
+public $queryTheme = [
     'light' => 'default',
     'dark'  => 'dark'
 ];
 
-public $sqlMarginBottom = 4;
-
+/**
+ * -------------------------------------------------------------
+ * Bottom Margin Between Query
+ * -------------------------------------------------------------
+ * 
+ * Value in px
+ * 
+ * @var int
+ */
+public $queryMarginBottom = 4;
 ```
 
 ### 2. DbToolbar

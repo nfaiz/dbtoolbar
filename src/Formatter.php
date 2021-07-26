@@ -30,7 +30,7 @@ class Formatter
      *
      * @return string
      */
-    public function render(array $queries): string
+    public function render(array $queries, string $parserPath): string
     {
         if (empty($queries))
         {
@@ -42,7 +42,7 @@ class Formatter
             'hlstyle' => $this->getStyle()
         ];
 
-        return service('parser')->setData($data)->render('Nfaiz\DbToolbar\Views\database.tpl');
+        return service('parser')->setData($data)->render($parserPath);
     }
 
     /**
@@ -64,7 +64,7 @@ class Formatter
 
         $style = \HighlightUtilities\getStyleSheet($light) . $darkStyle;
 
-        $margin = $this->getBottomMargin();
+        $margin = $this->getBottomMargin($config);
 
         return <<<STYLE
         <style>
@@ -81,12 +81,12 @@ class Formatter
      */
     private function getLightStyleSheetName(object $config, array $cssList): string
     {
-        if (! isset($config->sqlCssTheme['light']) || ! in_array($config->sqlCssTheme['light'], $cssList, true))
+        if (! isset($config->queryTheme['light']) || ! in_array($config->queryTheme['light'], $cssList, true))
         {
             return 'default';           
         }
 
-        return $config->sqlCssTheme['light'];
+        return $config->queryTheme['light'];
     }
 
     /**
@@ -96,12 +96,12 @@ class Formatter
      */
     private function getDarkStyleSheetName(object $config, array $cssList): string
     {
-        if (! isset($config->sqlCssTheme['dark']) || ! in_array($config->sqlCssTheme['dark'], $cssList, true))
+        if (! isset($config->queryTheme['dark']) || ! in_array($config->queryTheme['dark'], $cssList, true))
         {
             return 'dark';           
         }
 
-        return $config->sqlCssTheme['dark'];
+        return $config->queryTheme['dark'];
     }
 
     /**
@@ -109,15 +109,13 @@ class Formatter
      *
      * @return string
      */
-    private function getBottomMargin(): int
+    private function getBottomMargin($config): int
     {
-        $config = config(Toolbar::class);
-
-        if (! isset($config->sqlMarginBottom) || ! is_numeric($config->sqlMarginBottom))
+        if (! isset($config->queryMarginBottom) || ! is_numeric($config->queryMarginBottom))
         {
             return 4;           
         }
 
-        return $config->sqlMarginBottom;
+        return $config->queryMarginBottom;
     }
 }

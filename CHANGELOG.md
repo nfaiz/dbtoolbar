@@ -1,5 +1,13 @@
 # Changelog
 
+## [v0.9.2](https://github.com/nfaiz/ci4-debug-toolbar/compare/v0.9.1...v0.9.2) - Not Released
+
+### Changed
+- Property name from `$sqlMarginBottom` to `$queryMarginBottom.php` and `$cssSqlTheme` to `$queryTheme` in `app/Config/Toolbar.php`.
+
+### Others
+- Code refactor.
+
 ## [v0.9.1](https://github.com/nfaiz/ci4-debug-toolbar/compare/v0.9.0...v0.9.1) - 2021-07-24
 
 ### Changed

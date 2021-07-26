@@ -11,6 +11,7 @@ namespace Nfaiz\DbToolbar\Collectors;
 
 use CodeIgniter\Database\Query;
 use CodeIgniter\Debug\Toolbar\Collectors\BaseCollector;
+use Nfaiz\DbToolbar\Queries;
 
 /**
  * Collector for the Database tab of the Debug Toolbar.
@@ -130,24 +131,9 @@ class Database extends BaseCollector
      */
     public function display()
     {
-        if (class_exists('Highlight\Highlighter') 
-            && class_exists('Nfaiz\DbToolbar\Formatter'))
-        {
-            $hl = new \Nfaiz\DbToolbar\Formatter();
+        $dbToolbar = new Queries(static::$queries);
 
-            $queries = [];
-
-            foreach (static::$queries as $query) {
-                $queries[] = [
-                    'duration' => ((float) $query->getDuration(5) * 1000) . ' ms',
-                    'sql'      => $hl->highlightSql($query->getQuery()),
-                ];
-            }
-
-            return $hl->render($queries);
-        }
-
-        throw new \Exception("Dependencies not met. Please check installation and setup.", 1);
+        return $dbToolbar->display();
     }
 
     /**

@@ -12,14 +12,16 @@ Alternative SQL Syntax Highlighter for CodeIgniter 4 Database Debug Toolbar.
   * [Requirement](#Requirement)
   * [Installation](#installation)
   * [Setup Config File](#setup-config-file)
-    * [Create Library Config File](#create-dbtoolbar-config-file)
-    * [Edit Toolbar](#edit-toolbar)
+    * [Edit Toolbar](#1-edit-toolbar)
       * [Add Collectors Property](#i-add-dbtoolbar-collector-to-collectors-property)
-      * [Add sqlCssTheme property (Optional)](#ii-add-sqlcsstheme-and-sqlMarginBottom-property)
+      * [Add queryTheme and queryMarginBottom property](#ii-add-queryTheme-and-queryMarginBottom-property) (Optional)
+    * [Create DbToolbar Config File](#2-create-dbtoolbar-config-file) (Optional)
   * [Configuration](#configuration)
-    * [Library Config](#1-library-config)
-    * [Disable Default Database Collector](#2-disable-default-database-collector)
-    * [Change Highlighter StyleSheet](#3-change-highlighter-stylesheet)
+    * [Disable Default Database Collector](#1-disable-default-database-collector)
+    * [Library Config](#2-library-config)
+    * [Change Highlighter Styling](#3-change-highlighter-styling)
+      * [Query Highlighter Theme](#i-query-highlighter-theme )
+      * [Bottom Margin Between Query](#i-bottom-margin-between-query)
   * [Screenshot](#screenshot)
     * [Default database toolbar](#default-database-toolbar)
     * [After Using Highlighter](#after-using-highlighter)
@@ -40,10 +42,63 @@ Install library via composer:
 
 ## Setup Config File
 
-* Create Library config named [DbToolbar.php](#create-dbtoolbar-config-file)
 * Edit [Toolbar.php](#edit-toolbar)
+* Create [DbToolbar.php](#create-dbtoolbar-config-file) (Optional)
 
-### Create DbToolbar Config File
+### 1. Edit Toolbar
+Open `app/Config/Toolbar.php` file.
+
+#### i. Add DbToolbar collector to collectors Property
+Add `\Nfaiz\DbToolbar\Collectors\Database::class` to **$collectors** property
+
+
+```php
+
+public $collectors = [
+    Timers::class,
+    \Nfaiz\DbToolbar\Collectors\Database::class,
+    Database::class,
+    Logs::class,
+    Views::class,
+    // \CodeIgniter\Debug\Toolbar\Collectors\Cache::class,
+    Files::class,
+    Routes::class,
+    Events::class,
+];
+```
+
+#### ii. Add queryTheme and queryMarginBottom property
+Adding queryTheme and sqlMarginBottom in `app/Config/Toolbar.php` are optional.
+
+```php
+
+/**
+ * -------------------------------------------------------------
+ * Query Theme
+ * -------------------------------------------------------------
+ * 
+ * Configuration for light and dark mode SQL syntax highlighter.
+ *
+ * @var array
+ */
+public $queryTheme = [
+    'light' => 'default',
+    'dark'  => 'dark'
+];
+
+/**
+ * -------------------------------------------------------------
+ * Bottom Margin Between Query
+ * -------------------------------------------------------------
+ * 
+ * Value in px
+ * 
+ * @var int
+ */
+public $queryMarginBottom = 4;
+```
+
+### 2. Create DbToolbar Config File
 
 Creating DbToolbar config can be done via spark:
 
@@ -82,89 +137,37 @@ class DbToolbar extends \Nfaiz\DbToolbar\Config\DbToolbar
 }
 ```
 
-### Edit Toolbar
-Open `app/Config/Toolbar.php` file.
-
-#### i. Add DbToolbar collector to collectors Property
-Add `\Nfaiz\DbToolbar\Collectors\Database::class` to **$collectors** property
-
-
-```php
-
-public $collectors = [
-    Timers::class,
-    \Nfaiz\DbToolbar\Collectors\Database::class,
-    Database::class,
-    Logs::class,
-    Views::class,
-    // \CodeIgniter\Debug\Toolbar\Collectors\Cache::class,
-    Files::class,
-    Routes::class,
-    Events::class,
-];
-```
-
-#### ii. Add sqlCssTheme and sqlMarginBottom property
-Adding sqlCssTheme and sqlMarginBottom in `app/Config/Toolbar.php` are optional.
-
-```php
-
-/**
- * -------------------------------------------------------------
- * SQL CSS Theme
- * -------------------------------------------------------------
- * 
- * Configuration for light and dark mode SQL syntax highlighter.
- *
- * @var array
- */
-public $sqlCssTheme = [
-    'light' => 'default',
-    'dark'  => 'dark'
-];
-
-/**
- * -------------------------------------------------------------
- * Bottom Margin Between Queries
- * -------------------------------------------------------------
- * 
- * Value in px
- * 
- * @var int
- */
-public $sqlMarginBottom = 4;
-
-```
-
 Once library installation and setup config files are completed, refresh page to see the result.<br />
 
 
 ## Configuration
 
 
-### 1. Library Config
-To **configure** DbToolbar, open `app/Config/DbToolbar.php`. Change the value accordingly.
+### 1. Disable Default Database Collector
+To **disable** default CodeIgniter 4 database collector open `app/Config/Events.php` and then `comment` or `remove` code below;
 
+```php
+// Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
+```
+
+### 2. Library Config
+To **configure** DbToolbar, open `app/Config/DbToolbar.php` or [create it](#2-create-dbtoolbar-config-file) if not yet created. 
+
+Change the value accordingly.
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | $collect | To enable/disable DbToolbar collector | Bool | `true` |
 | $tabTitle | Title to display at debug toolbar tab | String | `Queries` |
 
 
-### 2. Disable Default Database Collector
-To **disable** default database collector open `app/Config/Events.php` and then `comment` or `remove` code below;
+### 3. Change Highlighter Styling
 
-```php
-Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
-```
+#### i. Query Highlighter Theme 
+To change `Query Highlighter Theme`, find `$queryTheme` property at `app/Config/Toolbar.php` or [add it](#ii-add-queryTheme-and-queryMarginBottom-property) if not yet added.
 
-### 3. Change Highlighter StyleSheet
-To **change** highlighter stylesheet, open `app/Config/Toolbar.php`.
-
-Find `$sqlCssTheme` property.
 
 * Assign stylesheet name without `.css` extension to `light` or `dark` mode. E.g `'github'`
-* Available stylesheets can be found using HighlightUtilities. Please see [highlighter-utilities](https://github.com/scrivo/highlight.php#highlighter-utilities) for more information.
+* Available stylesheets can be found using HighlightUtilities. Please see [highlighter-utilities](https://github.com/scrivo/highlight.php#highlighter-utilities) for more information
 
 
 E.g Using `\HighlightUtilities` in **Controller**
@@ -182,6 +185,13 @@ E.g Using `\HighlightUtilities` in **Controller**
     $sytleSheetPath = \HighlightUtilities\getStyleSheetPath('github');
     d($sytleSheetPath);
 ```
+
+#### ii. Bottom Margin Between Query
+To change `Bottom Margin Between Query`, find `$queryMarginBottom` property at `app/Config/Toolbar.php` or [add it](#ii-add-queryTheme-and-queryMarginBottom-property) if not yet added.
+
+* Assign value with integer type
+* value is in pixels (`px`)
+
 
 ## Screenshot
 Screenshot below are using `Database` for [tab title](#1-library-config) and default database toolbar is [disabled](#2-disable-default-database-collector)
