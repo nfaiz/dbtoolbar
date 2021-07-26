@@ -1,26 +1,26 @@
 
     /**
      * -------------------------------------------------------------
-     * SQL CSS Theme
+     * Query Theme
      * -------------------------------------------------------------
      * 
      * Configuration for light and dark mode SQL syntax highlighter.
      *
      * @var array
      */
-    public $sqlCssTheme = [
+    public $queryTheme = [
         'light' => 'default',
         'dark'  => 'dark'
     ];
 
     /**
      * -------------------------------------------------------------
-     * Bottom Margin Between Queries
+     * Bottom Margin Between Query
      * -------------------------------------------------------------
      * 
      * Value in px
      * 
      * @var int
      */
-    public $sqlMarginBottom = 4;
+    public $queryMarginBottom = 4;
 }
