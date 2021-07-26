@@ -3,7 +3,9 @@
 ## [v0.9.2](https://github.com/nfaiz/dbtoolbar/compare/v0.9.1...v0.9.2) - 2021-07-26
 
 ### Changed
-- Property name from `$sqlMarginBottom` to `$queryMarginBottom.php` and `$cssSqlTheme` to `$queryTheme` in `app/Config/Toolbar.php`.
+Property name in `app/Config/Toolbar.php` from
+1. `$sqlMarginBottom` to `$queryMarginBottom` 
+2. `$cssSqlTheme` to `$queryTheme` 
 
 ### Others
 - Code refactor.
