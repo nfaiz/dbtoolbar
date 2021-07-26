@@ -13,15 +13,15 @@ Alternative SQL Syntax Highlighter for CodeIgniter 4 Database Debug Toolbar.
   * [Installation](#installation)
   * [Setup Config File](#setup-config-file)
     * [Edit Toolbar](#1-edit-toolbar)
-      * [Add Collectors Property](#i-add-dbtoolbar-collector-to-collectors-property)
-      * [Add queryTheme and queryMarginBottom property](#ii-add-queryTheme-and-queryMarginBottom-property) (Optional)
+      * [Add DbToolbar Collector to Collectors Property](#i-add-dbtoolbar-collector-to-collectors-property)
+      * [Add queryTheme and queryMarginBottom Property](#ii-add-queryTheme-and-queryMarginBottom-property) (Optional)
     * [Create DbToolbar Config File](#2-create-dbtoolbar-config-file) (Optional)
   * [Configuration](#configuration)
     * [Disable Default Database Collector](#1-disable-default-database-collector)
     * [Library Config](#2-library-config)
     * [Change Highlighter Styling](#3-change-highlighter-styling)
       * [Query Highlighter Theme](#i-query-highlighter-theme )
-      * [Bottom Margin Between Query](#i-bottom-margin-between-query)
+      * [Bottom Margin Between Query](#ii-bottom-margin-between-query)
   * [Screenshot](#screenshot)
     * [Default database toolbar](#default-database-toolbar)
     * [After Using Highlighter](#after-using-highlighter)
@@ -48,7 +48,7 @@ Install library via composer:
 ### 1. Edit Toolbar
 Open `app/Config/Toolbar.php` file.
 
-#### i. Add DbToolbar collector to collectors Property
+#### i. Add DbToolbar collector to Collectors Property
 Add `\Nfaiz\DbToolbar\Collectors\Database::class` to **$collectors** property
 
 
@@ -67,7 +67,7 @@ public $collectors = [
 ];
 ```
 
-#### ii. Add queryTheme and queryMarginBottom property
+#### ii. Add queryTheme and queryMarginBottom Property
 Adding queryTheme and sqlMarginBottom in `app/Config/Toolbar.php` are optional.
 
 ```php
