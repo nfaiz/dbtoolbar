@@ -68,7 +68,7 @@ public $collectors = [
 ```
 
 #### ii. Add queryTheme and queryMarginBottom Property
-Adding queryTheme and sqlMarginBottom in `app/Config/Toolbar.php` are optional.
+Adding **$queryTheme** and **$sqlMarginBottom** in `app/Config/Toolbar.php` are optional.
 
 ```php
 
