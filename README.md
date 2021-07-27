@@ -207,7 +207,7 @@ To change `Bottom Margin Between Query`, find `$queryMarginBottom` property at `
 
 
 ## Screenshot
-Screenshot below are using `Database` for [tab title](#1-library-config) and default database toolbar is [disabled](#2-disable-default-database-collector)
+Screenshot below are using `Database` for [tab title](#2-library-config) and default database toolbar is [disabled](#1-disable-default-database-collector)
 
 ### Default Database Toolbar
 
