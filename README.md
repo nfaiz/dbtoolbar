@@ -42,8 +42,8 @@ Install library via composer:
 
 ## Setup Config File
 
-* Edit [Toolbar.php](#edit-toolbar)
-* Create [DbToolbar.php](#create-dbtoolbar-config-file) (Optional)
+* Edit [Toolbar.php](#1-edit-toolbarr)
+* Create [DbToolbar.php](#2-create-dbtoolbar-config-file) (Optional)
 
 ### 1. Edit Toolbar
 Open `app/Config/Toolbar.php` file.
