@@ -10,7 +10,7 @@ class DbToolbar extends BaseConfig
      * -------------------------------------------------------------
      * Collect Queries?
      * -------------------------------------------------------------
-     * 
+     *
      * To enable/disable query collector
      * 
      * @var boolean
@@ -21,7 +21,7 @@ class DbToolbar extends BaseConfig
      * -------------------------------------------------------------
      * Tab Title
      * -------------------------------------------------------------
-     * 
+     *
      * Tab title display
      * 
      * @var string

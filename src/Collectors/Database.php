@@ -2,7 +2,7 @@
 
 /**
  * This file is not part of the CodeIgniter 4 framework.
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */

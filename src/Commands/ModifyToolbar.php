@@ -28,26 +28,26 @@ class ModifyToolbar extends BaseCommand
         $content = file_get_contents($this->getAppConfiGPath($filename));
 
         $content = str_replace(
-            "Timers::class," . PHP_EOL . "        \Nfaiz\DbToolbar\Collectors\Database::class,", 
-            "Timers::class,", 
+            "Timers::class," . PHP_EOL . "        \Nfaiz\DbToolbar\Collectors\Database::class,",
+            "Timers::class,",
             $content
         );
 
         $content = str_replace(
-            "Timers::class,", 
-            "Timers::class," . PHP_EOL . "        \Nfaiz\DbToolbar\Collectors\Database::class,", 
+            "Timers::class,",
+            "Timers::class," . PHP_EOL . "        \Nfaiz\DbToolbar\Collectors\Database::class,",
             $content
         );
 
         $content = str_replace(
-            service('parser')->render('Nfaiz\DbToolbar\Views\hlconfig.tpl'), 
-            '}', 
+            service('parser')->render('Nfaiz\DbToolbar\Views\hlconfig.tpl'),
+            '}',
             $content
         );
 
         $content = str_replace(
             "}", 
-            service('parser')->render('Nfaiz\DbToolbar\Views\hlconfig.tpl'), 
+            service('parser')->render('Nfaiz\DbToolbar\Views\hlconfig.tpl'),
             $content
         );
 

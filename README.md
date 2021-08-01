@@ -42,14 +42,14 @@ Install library via composer:
 
 ## Setup Config File
 
-* Edit [Toolbar.php](#1-edit-toolbarr)
+* Edit [Toolbar.php](#1-edit-toolbar)
 * Create [DbToolbar.php](#2-create-dbtoolbar-config-file) (Optional)
 
 ### 1. Edit Toolbar
 Open `app/Config/Toolbar.php` file.
 
 #### i. Add DbToolbar collector to Collectors Property
-Add `\Nfaiz\DbToolbar\Collectors\Database::class` to **$collectors** property
+Add `\Nfaiz\DbToolbar\Collectors\Database::class` to **$collectors** property.
 
 
 ```php
@@ -137,14 +137,15 @@ class DbToolbar extends \Nfaiz\DbToolbar\Config\DbToolbar
 }
 ```
 
-Once library installation and setup config files are completed, refresh page to see the result.<br />
+Once library installation and setup config files are completed, refresh page to see the result.
 
 
 ## Configuration
 
 
 ### 1. Disable Default Database Collector
-To **disable** default CodeIgniter 4 database collector open `app/Config/Events.php` and then `comment` or `remove` code below;
+To **disable** default CodeIgniter 4 database collector open `app/Config/Events.php`.
+`Comment` or `Remove` default database collector below;
 
 ```php
 // Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
@@ -221,5 +222,5 @@ Screenshot below are using `Database` for [tab title](#1-library-config) and def
 <img src="https://user-images.githubusercontent.com/1330109/125155379-fca34c80-e191-11eb-981f-8fb6e8df9794.png" alt="Dark mode">
 
 ## Credit
-- [Highlight.php](https://github.com/scrivo/highlight.php)
-- Inspired by this [pull request](https://github.com/codeigniter4/CodeIgniter4/pull/3515)
+* [Highlight.php](https://github.com/scrivo/highlight.php)
+* Inspired by this [pull request](https://github.com/codeigniter4/CodeIgniter4/pull/3515)

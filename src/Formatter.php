@@ -15,7 +15,8 @@ class Formatter
     {
         $hl = new Highlighter();
 
-        try {
+        try 
+        {
             $highlighted = $hl->highlight('sql', $sql);
 
             return '<code class="hljs hljs-pre-line sql">' . $highlighted->value . '</code>';
@@ -38,7 +39,7 @@ class Formatter
         }
 
         $data = [
-            'queries' => $queries, 
+            'queries' => $queries,
             'hlstyle' => $this->getStyle()
         ];
 
@@ -83,7 +84,7 @@ class Formatter
     {
         if (! isset($config->queryTheme['light']) || ! in_array($config->queryTheme['light'], $cssList, true))
         {
-            return 'default';           
+            return 'default';
         }
 
         return $config->queryTheme['light'];
@@ -98,7 +99,7 @@ class Formatter
     {
         if (! isset($config->queryTheme['dark']) || ! in_array($config->queryTheme['dark'], $cssList, true))
         {
-            return 'dark';           
+            return 'dark';
         }
 
         return $config->queryTheme['dark'];
@@ -113,7 +114,7 @@ class Formatter
     {
         if (! isset($config->queryMarginBottom) || ! is_numeric($config->queryMarginBottom))
         {
-            return 4;           
+            return 4;
         }
 
         return $config->queryMarginBottom;

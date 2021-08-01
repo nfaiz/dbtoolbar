@@ -6,23 +6,24 @@ use \Nfaiz\DbToolbar\Formatter;
 
 class Queries
 {
-	protected static $queries = [];
+    protected static $queries = [];
 
-	function __construct($queries)
-	{
-		static::$queries = $queries;
-	}
+    function __construct($queries)
+    {
+        static::$queries = $queries;
+    }
 
-	public function display(): string
-	{
-		if (class_exists('Highlight\Highlighter') 
+    public function display(): string
+    {
+        if (class_exists('Highlight\Highlighter') 
             && class_exists('Nfaiz\DbToolbar\Formatter'))
         {
             $formatter = new Formatter();
 
             $queries = [];
 
-            foreach (static::$queries as $query) {
+            foreach (static::$queries as $query) 
+            {
                 $queries[] = [
                     'duration' => ((float) $query->getDuration(5) * 1000) . ' ms',
                     'sql'      => $formatter->highlightSql($query->getQuery()),
@@ -33,6 +34,5 @@ class Queries
         }
 
         throw new \Exception("Dependencies not met. Please check installation and setup.", 1);
-	}
-
-}   
+    }
+}
