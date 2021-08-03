@@ -67,14 +67,14 @@ class Publish extends BaseCommand
         );
 
         $content = str_replace(
-            service('parser')->render('Nfaiz\DbToolbar\Views\sqlcsstheme.tpl'),
+            service('parser')->render('Nfaiz\DbToolbar\Views\hlconfig.tpl'),
             '}',
             $content
         );
 
         $content = str_replace(
             "}",
-            service('parser')->render('Nfaiz\DbToolbar\Views\sqlcsstheme.tpl'),
+            service('parser')->render('Nfaiz\DbToolbar\Views\hlconfig.tpl'),
             $content
         );
 
