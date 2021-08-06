@@ -104,7 +104,7 @@ Creating DbToolbar config can be done via spark:
 
     php spark dbtoolbar:config
 
-Or manually create [app/Config/DbToolbar.php](docs/installation.md#2-dbtoolbar);
+Or manually create [app/Config/DbToolbar.php](docs/INSTALLATION.md#2-dbtoolbar);
 
 
 Once library installation and setup config files are completed, refresh page to see the result.
