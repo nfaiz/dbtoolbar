@@ -134,6 +134,17 @@ class DbToolbar extends \Nfaiz\DbToolbar\Config\DbToolbar
      * @var string
      */
     public $tabTitle = 'Queries';
+
+    /**
+     * -------------------------------------------------------------
+     * Log Queries
+     * -------------------------------------------------------------
+     *
+     * Need to set threshold to minimum 7 at app/Config/Logger.php
+     * 
+     * @var boolean
+     */
+    public $logger = false;
 }
 ```
 
@@ -159,6 +170,7 @@ Change the value accordingly.
 | --- | --- | --- | --- |
 | $collect | To enable/disable DbToolbar collector | Bool | `true` |
 | $tabTitle | Title to display at debug toolbar tab | String | `Queries` |
+| $logger | To log query using logger. Need to set threshold to minimum 7 in `app/Config/Logger.php` | Bool | `false` |
 
 
 ### 3. Change Highlighter Styling

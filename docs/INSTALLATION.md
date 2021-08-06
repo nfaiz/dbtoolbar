@@ -115,5 +115,16 @@ class DbToolbar extends \Nfaiz\DbToolbar\Config\DbToolbar
      * @var string
      */
     public $tabTitle = 'Queries';
+
+    /**
+     * -------------------------------------------------------------
+     * Log Queries
+     * -------------------------------------------------------------
+     *
+     * Need to set threshold to minimum 7 at app/Config/Logger.php
+     * 
+     * @var boolean
+     */
+    public $logger = false;
 }
 ```

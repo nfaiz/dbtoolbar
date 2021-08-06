@@ -22,12 +22,24 @@ class Queries
 
             $queries = [];
 
+            $config = config(DbToolbar::class);
+
             foreach (static::$queries as $query) 
             {
+                $duration = (float) $query->getDuration(5) * 1000;
+
                 $queries[] = [
-                    'duration' => ((float) $query->getDuration(5) * 1000) . ' ms',
+                    'duration' => $duration . ' ms',
                     'sql'      => $formatter->highlightSql($query->getQuery()),
                 ];
+
+                if ($config->logger === true)
+                {
+                    log_message('info', 'Query time: {duration}ms'. PHP_EOL . '{sql}' . PHP_EOL, [
+                        'sql' => $query->getQuery(),
+                        'duration' => $duration
+                    ]);
+                }
             }
 
             return $formatter->render($queries, 'Nfaiz\DbToolbar\Views\queries.tpl');
