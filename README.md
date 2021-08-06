@@ -19,7 +19,7 @@ Alternative SQL Syntax Highlighter for CodeIgniter 4 Database Debug Toolbar.
   * [Configuration](#configuration)
     * [Disable Default Database Collector](#1-disable-default-database-collector)
     * [Library Config](#2-library-config)
-    * [Change Highlighter Styling](#3-change-highlighter-styling)
+    * [Change Highlighter Styling](#3-change-query-styling)
       * [Query Highlighter Theme](#i-query-highlighter-theme )
       * [Bottom Margin Between Query](#ii-bottom-margin-between-query)
   * [Screenshot](#screenshot)
@@ -68,7 +68,7 @@ public $collectors = [
 ```
 
 #### ii. Add queryTheme and queryMarginBottom Property
-Adding **$queryTheme** and **$sqlMarginBottom** in `app/Config/Toolbar.php` are optional.
+Add **$queryTheme** and **$queryMarginBottom**. Both properties are optional for query highlighter styling.
 
 ```php
 
@@ -104,49 +104,8 @@ Creating DbToolbar config can be done via spark:
 
     php spark dbtoolbar:config
 
-Or manually create `app/Config/dbtoolbar.php` file using;
+Or manually create [app/Config/DbToolbar.php](docs/installation.md#2-dbtoolbar);
 
-```php
-<?php 
-
-namespace Config;
-
-class DbToolbar extends \Nfaiz\DbToolbar\Config\DbToolbar
-{
-    /**
-     * -------------------------------------------------------------
-     * Collect Queries?
-     * -------------------------------------------------------------
-     * 
-     * To enable/disable query collector
-     * 
-     * @var boolean
-     */
-    public $collect = true;
-
-    /**
-     * -------------------------------------------------------------
-     * Tab Title
-     * -------------------------------------------------------------
-     * 
-     * Tab title display
-     * 
-     * @var string
-     */
-    public $tabTitle = 'Queries';
-
-    /**
-     * -------------------------------------------------------------
-     * Log Queries
-     * -------------------------------------------------------------
-     *
-     * Need to set threshold to minimum 7 at app/Config/Logger.php
-     * 
-     * @var boolean
-     */
-    public $logger = false;
-}
-```
 
 Once library installation and setup config files are completed, refresh page to see the result.
 
@@ -173,14 +132,14 @@ Change the value accordingly.
 | $logger | To log query using logger. Need to set threshold to minimum 7 in `app/Config/Logger.php` | Bool | `false` |
 
 
-### 3. Change Highlighter Styling
+### 3. Change Query Styling
 
 #### i. Query Highlighter Theme 
 To change `Query Highlighter Theme`, find `$queryTheme` property at `app/Config/Toolbar.php` or [add it](#ii-add-queryTheme-and-queryMarginBottom-property) if not yet added.
 
 
-* Assign stylesheet name without `.css` extension to `light` or `dark` mode. E.g `'github'`
-* Available stylesheets can be found using HighlightUtilities. Please see [highlighter-utilities](https://github.com/scrivo/highlight.php#highlighter-utilities) for more information
+* Assign stylesheet theme to `light` or `dark` mode. E.g `'github'`
+* Available stylesheets can be found using HighlightUtilities. See [highlighter-utilities](https://github.com/scrivo/highlight.php#highlighter-utilities) for more information
 
 
 E.g Using `\HighlightUtilities` in **Controller**
@@ -189,14 +148,6 @@ E.g Using `\HighlightUtilities` in **Controller**
     // Get available stylesheets.
     $availableStyleSheets = \HighlightUtilities\getAvailableStyleSheets();
     d($availableStyleSheets);
-
-    // Set true to get available stylesheets with absolute path.
-    $availableStyleSheetsPath = \HighlightUtilities\getAvailableStyleSheets(true);
-    d($availableStyleSheetsPath);
-
-    // Get specific stylesheet path.
-    $sytleSheetPath = \HighlightUtilities\getStyleSheetPath('github');
-    d($sytleSheetPath);
 ```
 
 #### ii. Bottom Margin Between Query
@@ -207,31 +158,30 @@ To change `Bottom Margin Between Query`, find `$queryMarginBottom` property at `
 
 
 ## Screenshot
-Screenshot below are using `Database` for [tab title](#1-library-config) and default database toolbar is [disabled](#2-disable-default-database-collector)
 
 ### Default Database Toolbar
 
 * Light<br />
-<img src="https://user-images.githubusercontent.com/1330109/125154813-894c0b80-e18e-11eb-8bf3-4e6834437ad9.png" alt="Light mode">
+<img src="https://user-images.githubusercontent.com/1330109/128514930-c450fef7-2008-4991-bf95-92c1acc76426.png" alt="Light mode">
 
 * Dark<br />
-<img src="https://user-images.githubusercontent.com/1330109/125154888-ef389300-e18e-11eb-88f6-7f066ec09775.png" alt="Dark mode">
+<img src="https://user-images.githubusercontent.com/1330109/128515006-1acf19e3-0db4-487c-9fca-82c19670fe5e.png" alt="Dark mode">
 
-### After using highlighter
+### After using DbToolbar
 
-* Light (using default.css)<br />
-<img src="https://user-images.githubusercontent.com/1330109/125154946-450d3b00-e18f-11eb-982f-93fcc3d09e06.png" alt="Light mode">
+* Light (using default)<br />
+<img src="https://user-images.githubusercontent.com/1330109/128515151-c1289da9-1f6a-4561-9fb8-ddb6fc8e9f0f.png" alt="Light mode">
 
-* Dark (using dark.css)<br />
-<img src="https://user-images.githubusercontent.com/1330109/125155349-bf3ebf00-e191-11eb-922f-8b9bd9f12df8.png" alt="Dark mode">
+* Dark (using dark)<br />
+<img src="https://user-images.githubusercontent.com/1330109/128515327-f0e6cda6-d443-4625-a44a-4dffc2caf9ee.png" alt="Dark mode">
 
 ### Another example
 
-* Light (using atom-one-light.css)
-<img src="https://user-images.githubusercontent.com/1330109/125155187-bb5e6d00-e190-11eb-91a5-b4c2f7da46e4.png" alt="Light mode">
+* Light (using atom-one-light)
+<img src="https://user-images.githubusercontent.com/1330109/128515815-01153f90-e140-48ed-93dc-b955d8b570e7.png" alt="Light mode">
 
-* Dark (using atom-one-dark.css)
-<img src="https://user-images.githubusercontent.com/1330109/125155379-fca34c80-e191-11eb-981f-8fb6e8df9794.png" alt="Dark mode">
+* Dark (using atom-one-dark)
+<img src="https://user-images.githubusercontent.com/1330109/128515952-39358146-0d32-42c4-a27d-80789503290b.png" alt="Dark mode">
 
 ## Credit
 * [Highlight.php](https://github.com/scrivo/highlight.php)
