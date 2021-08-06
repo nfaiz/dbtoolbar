@@ -1,6 +1,6 @@
 # Changelog
 
-## [v0.9.3](https://github.com/nfaiz/dbtoolbar/compare/v0.9.2...v0.9.3) - Not Released
+## [v0.9.3](https://github.com/nfaiz/dbtoolbar/compare/v0.9.2...v0.9.3) - 2021-08-06
 
 ### Enhancement
 - Add logging using `$toLogger`. See [configuration](readme.md#configuration).
