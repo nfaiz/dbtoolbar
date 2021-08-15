@@ -1,6 +1,6 @@
 # Changelog
 
-## [v0.9.4](https://github.com/nfaiz/dbtoolbar/compare/v0.9.3...v0.9.4) - Not Released
+## [v0.9.4](https://github.com/nfaiz/dbtoolbar/compare/v0.9.3...v0.9.4) - 2021-08-15
 
 ### Changed
 - Manually set query collector for `DBQuery` events.
