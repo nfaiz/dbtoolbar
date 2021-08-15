@@ -4,7 +4,6 @@
     "keywords": [
         "codeigniter",
         "codeigniter4",
-        "highlight.php",
         "debug",
         "toolbar",
         "database",
@@ -22,14 +21,9 @@
     ],
     "require": {
         "scrivo/highlight.php": "^9.18",
-        "codeigniter4/framework": "^4"
+        "codeigniter4/framework": "^4.1"
     },
     "autoload": {
-        "psr-4": {
-            "Nfaiz\\DbToolbar\\": "src/"
-        }
-    },
-    "autoload-dev": {
         "psr-4": {
             "Nfaiz\\DbToolbar\\": "src/"
         }

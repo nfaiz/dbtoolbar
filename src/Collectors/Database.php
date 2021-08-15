@@ -9,9 +9,9 @@
 
 namespace Nfaiz\DbToolbar\Collectors;
 
-use CodeIgniter\Database\Query;
 use CodeIgniter\Debug\Toolbar\Collectors\BaseCollector;
-use Nfaiz\DbToolbar\Queries;
+use CodeIgniter\Database\Query;
+use Nfaiz\DbToolbar\Toolbar;
 
 /**
  * Collector for the Database tab of the Debug Toolbar.
@@ -21,21 +21,21 @@ class Database extends BaseCollector
     /**
      * Whether this collector has timeline data.
      *
-     * @var bool
+     * @var boolean
      */
     protected $hasTimeline = true;
 
     /**
      * Whether this collector should display its own tab.
      *
-     * @var bool
+     * @var boolean
      */
     protected $hasTabContent = true;
 
     /**
      * Whether this collector has data for the Vars tab.
      *
-     * @var bool
+     * @var boolean
      */
     protected $hasVarData = false;
 
@@ -44,7 +44,7 @@ class Database extends BaseCollector
      *
      * @var string
      */
-    protected $title = 'Queries';
+    protected $title = 'Database';
 
     /**
      * Array of database connections.
@@ -67,10 +67,6 @@ class Database extends BaseCollector
     public function __construct()
     {
         $this->connections = \Config\Database::getConnections();
-
-        $config = config(DbToolbar::class);
-
-        $this->title = $config->tabTitle;
     }
 
     /**
@@ -89,7 +85,11 @@ class Database extends BaseCollector
         $max = $config->maxQueries ?: 100;
 
         if (count(static::$queries) < $max) {
-            static::$queries[] = $query;
+            static::$queries[] = [
+                'sql' => $query->getQuery(),
+                'duration' => $query->getDuration(5),
+                'start' => $query->getStartTime(true)
+            ];
         }
     }
 
@@ -102,7 +102,8 @@ class Database extends BaseCollector
     {
         $data = [];
 
-        foreach ($this->connections as $alias => $connection) {
+        foreach ($this->connections as $alias => $connection)
+        {
             // Connection Time
             $data[] = [
                 'name'      => 'Connecting to Database: "' . $alias . '"',
@@ -116,8 +117,8 @@ class Database extends BaseCollector
             $data[] = [
                 'name'      => 'Query',
                 'component' => 'Database',
-                'start'     => $query->getStartTime(true),
-                'duration'  => $query->getDuration(),
+                'start'     => $query['start'],
+                'duration'  => $query['duration'],
             ];
         }
 
@@ -129,17 +130,17 @@ class Database extends BaseCollector
      *
      * @return mixed
      */
-    public function display()
+    public function display(): string
     {
-        $dbToolbar = new Queries(static::$queries);
+        $toolbar = new Toolbar(static::$queries);
 
-        return $dbToolbar->display();
+        return $toolbar->display();
     }
 
     /**
      * Gets the "badge" value for the button.
      *
-     * @return int
+     * @return integer
      */
     public function getBadgeValue(): int
     {
@@ -154,13 +155,13 @@ class Database extends BaseCollector
     public function getTitleDetails(): string
     {
         return '(' . count(static::$queries) . ' Queries across ' . ($countConnection = count($this->connections)) . ' Connection' .
-            ($countConnection > 1 ? 's' : '') . ')';
+                ($countConnection > 1 ? 's' : '') . ')';
     }
 
     /**
      * Does this collector have any data collected?
      *
-     * @return bool
+     * @return boolean
      */
     public function isEmpty(): bool
     {

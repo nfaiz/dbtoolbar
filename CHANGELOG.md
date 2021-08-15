@@ -1,9 +1,20 @@
 # Changelog
 
+## [v0.9.4](https://github.com/nfaiz/dbtoolbar/compare/v0.9.3...v0.9.4) - Not Released
+
+### Changed
+- Manually set query collector for `DBQuery` events.
+- Moved `$logger` from `DbToolbar.php` to `Toolbar.php`.
+
+### Removed
+- `DbToolbar.php` config file.
+
+
 ## [v0.9.3](https://github.com/nfaiz/dbtoolbar/compare/v0.9.2...v0.9.3) - 2021-08-06
 
 ### Enhancement
-- Add logging using `$toLogger`. See [configuration](readme.md#configuration).
+- Add logging using `$logger`. See [configuration](readme.md#configuration).
+
 
 ## [v0.9.2](https://github.com/nfaiz/dbtoolbar/compare/v0.9.1...v0.9.2) - 2021-07-26
 
@@ -15,10 +26,12 @@ Property name in `app/Config/Toolbar.php` from
 ### Others
 - Code refactor.
 
+
 ## [v0.9.1](https://github.com/nfaiz/dbtoolbar/compare/v0.9.0...v0.9.1) - 2021-07-24
 
 ### Changed
-- Moved `$sqlMarginBottom` from `DbToolbar.php` to `Toolbar.php`
+- Moved `$sqlMarginBottom` from `DbToolbar.php` to `Toolbar.php`.
+
 
 ## [v0.9.0](https://github.com/nfaiz/dbtoolbar/releases/tag/v0.9.0) - 2021-07-25
 
