@@ -13,7 +13,6 @@ class Toolbar
     function __construct($queries)
     {
         static::$queries = $queries;
-
         $this->config = config('Toolbar');
     }
 
@@ -22,33 +21,33 @@ class Toolbar
      *
      * @return string
      */
-    public function display(string $template = 'Nfaiz\DbToolbar\Views\queries.tpl'): string
+    public function display(): string
     {
         $queries = [];
 
-        foreach (static::$queries as $query)
-        {
-            $duration = (float) number_format($query['duration'], 5) * 1000;
-
+        foreach (static::$queries as $query) {
+            $duration = (float) number_format($query['query']->getDuration(5), 5) * 1000;
             $numRows = $query['numRows'] ?? null;
+            $isDuplicate = $query['duplicate'] === true;
 
             $queries[] = [
                 'duration' => $duration . ' ms',
                 'sql'      => $this->highlightSql($query['sql']),
                 'numRows'  => is_int($numRows) ? number_format($numRows) : null,
                 'location' => $query['location'] ?? null,
+                'hover'    => $isDuplicate ? 'This query was called more than once.' : '',
+                'class'    => $isDuplicate ? 'duplicate' : '',
             ];
 
-            if (isset($this->config->logger) && $this->config->logger === true)
-            {
+            if (isset($this->config->logger) && $this->config->logger === true) {
                 log_message('info', 'Query time: {duration}ms'. PHP_EOL . '{sql}' . PHP_EOL, [
                     'sql' => $query['sql'],
-                    'duration' => $duration
+                    'duration' => $duration,
                 ]);
             }
         }
 
-        return $this->render($queries, $template);
+        return $this->render($queries);
     }
 
     /**
@@ -60,13 +59,10 @@ class Toolbar
     {
         $hl = new Highlighter();
 
-        try
-        {
+        try {
             $highlighted = $hl->highlight('sql', $sql);
-
             return '<code class="hljs hljs-pre-line sql">' . $highlighted->value . '</code>';
-        }
-        catch (\DomainException $e) {
+        } catch (\DomainException $e) {
             return '<code><pre>' . $sql . '</code></pre>';
         }
     }
@@ -76,10 +72,9 @@ class Toolbar
      *
      * @return string
      */
-    public function render(array $queries, string $parserPath): string
+    public function render(array $queries): string
     {
-        if (empty($queries))
-        {
+        if (empty($queries)) {
             return '';
         }
 
@@ -88,7 +83,7 @@ class Toolbar
             'hlstyle' => $this->getStyle()
         ];
 
-        return service('parser')->setData($data)->render($parserPath);
+        return service('parser')->setData($data)->render($this->config->queryTpl ?? 'Nfaiz\DbToolbar\Views\database.tpl');
     }
 
     /**
@@ -99,20 +94,16 @@ class Toolbar
     private function getStyle(): string
     {
         $light = $this->getStyleSheetName('light');
-
         $dark = $this->getStyleSheetName('dark');
-
         $darkStyle = str_replace('.hljs', '#toolbarContainer.dark .hljs', \HighlightUtilities\getStyleSheet($dark));
-
         $style = \HighlightUtilities\getStyleSheet($light) . $darkStyle;
-
         $margin = $this->getBottomMargin();
 
         return <<<STYLE
-        <style>
+        <STYLE>
         .hljs-pre-line{white-space:pre-line;margin-bottom:{$margin}px;}
         {$style}
-        </style>
+        </STYLE>
         STYLE;
     }
 
@@ -125,8 +116,8 @@ class Toolbar
     {
         $list = \HighlightUtilities\getAvailableStyleSheets();
 
-        if (! isset($this->config->queryTheme[$mode]) || ! in_array($this->config->queryTheme[$mode], $list, true))
-        {
+        if (! isset($this->config->queryTheme[$mode]) ||
+            ! in_array($this->config->queryTheme[$mode], $list, true)) {
             return $mode == 'light' ? 'default' : 'dark';
         }
 
@@ -140,8 +131,8 @@ class Toolbar
      */
     private function getBottomMargin(): int
     {
-        if (! isset($this->config->queryMarginBottom) || ! is_numeric($this->config->queryMarginBottom))
-        {
+        if (! isset($this->config->queryMarginBottom) ||
+            ! is_numeric($this->config->queryMarginBottom)) {
             return 4;
         }
 

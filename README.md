@@ -46,7 +46,7 @@ Replace default database collector class `Database::class` to `\Nfaiz\DbToolbar\
 public $collectors = [
     Timers::class,
 -   Database::class,
-+   \Nfaiz\DbToolbar\Collectors\Database::class
++   \Nfaiz\DbToolbar\Collectors\Database::class,
     Logs::class,
     Views::class,
     // \CodeIgniter\Debug\Toolbar\Collectors\Cache::class,
@@ -62,8 +62,7 @@ Open `app/Config/Events.php`
 Replace default query collector to `Events::on('DBQuery', 'Nfaiz\DbToolbar\Collectors\Database::collect');`
 
 ```diff
-if (CI_DEBUG && ! is_cli())
-{
+if (CI_DEBUG && ! is_cli()) {
 - Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
 + Events::on('DBQuery', 'Nfaiz\DbToolbar\Collectors\Database::collect');
   Services::toolbar()->respond();
@@ -84,12 +83,14 @@ Open `app/Config/Toolbar.php` and add properties below. (Optional)
  * Query Theme
  * -------------------------------------------------------------
  * 
- * Configuration for light and dark mode SQL syntax highlighter.
+ * Configuration for light and dark mode SQL Syntax Highlighter.
+ * Refer https://github.com/scrivo/highlight.php/tree/master/src/Highlight/styles or
+ * use \HighlightUtilities\getAvailableStyleSheets(); for available stylesheets.
  *
  * @var array
  */
 public $queryTheme = [
-    'light' => 'default',
+    'light' => 'default', // atom-one-light
     'dark'  => 'dark'
 ];
 
@@ -109,39 +110,13 @@ public $queryMarginBottom = 4;
  * Log Queries
  * -------------------------------------------------------------
  *
- * Need to set threshold to minimum 7 at app/Config/Logger.php
+ * Make sure to set threshold to minimum 7 at app/Config/Logger.php
+ * Logs can be found at ROOTPATH/writable/logs
  *
  * @var boolean
  */
 public $logger = false;
 ```
-
-
-**$queryTheme**
-
-* Assign stylesheet theme to `light` or `dark` mode. E.g replace `'default'` to `'atom-one-light'`
-* Available stylesheets can be found using HighlightUtilities. See [highlighter-utilities](https://github.com/scrivo/highlight.php#highlighter-utilities) for more information
-
-
-E.g To find available style sheets using  `\HighlightUtilities`
-
-```php
-// Get available stylesheets.
-$availableStyleSheets = \HighlightUtilities\getAvailableStyleSheets();
-d($availableStyleSheets);
-```
-
-**$queryMarginBottom**
-
-* Assign value with integer type
-* value is in pixel (`px`)
-
-**$logger**
-
-* Assign value to `true` to enable logger
-* Need to set threshold to minimum `7` at `app/Config/Logger.php`
-* Logs can be found at `ROOTPATH/writable/logs`
-
 
 ## Screenshot
 
@@ -170,5 +145,4 @@ d($availableStyleSheets);
 <img src="https://user-images.githubusercontent.com/1330109/128515952-39358146-0d32-42c4-a27d-80789503290b.png" alt="Dark mode">
 
 ## Credit
-* [Highlight.php](https://github.com/scrivo/highlight.php)
 * Inspired by this [pull request](https://github.com/codeigniter4/CodeIgniter4/pull/3515)

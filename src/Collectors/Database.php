@@ -66,7 +66,7 @@ class Database extends BaseCollector
      */
     public function __construct()
     {
-        $this->connections = \Config\Database::getConnections();
+        $this->getConnections();
     }
 
     /**
@@ -85,10 +85,12 @@ class Database extends BaseCollector
         $max = $config->maxQueries ?: 100;
 
         if (count(static::$queries) < $max) {
+            $queryString = $query->getQuery();
+
             static::$queries[] = [
-                'sql' => $query->getQuery(),
-                'duration' => $query->getDuration(5),
-                'start' => $query->getStartTime(true)
+                'query'     => $query,
+                'sql'       => $queryString,
+                'duplicate' => in_array($queryString, array_column(static::$queries, 'sql', null), true),
             ];
         }
     }
@@ -117,8 +119,9 @@ class Database extends BaseCollector
             $data[] = [
                 'name'      => 'Query',
                 'component' => 'Database',
-                'start'     => $query['start'],
-                'duration'  => $query['duration'],
+                'start'     => $query['query']->getStartTime(true),
+                'duration'  => $query['query']->getDuration(),
+                'query'     => $query['query']->debugToolbarDisplay(),
             ];
         }
 
@@ -139,8 +142,6 @@ class Database extends BaseCollector
 
     /**
      * Gets the "badge" value for the button.
-     *
-     * @return integer
      */
     public function getBadgeValue(): int
     {
@@ -154,14 +155,27 @@ class Database extends BaseCollector
      */
     public function getTitleDetails(): string
     {
-        return '(' . count(static::$queries) . ' Queries across ' . ($countConnection = count($this->connections)) . ' Connection' .
-                ($countConnection > 1 ? 's' : '') . ')';
+        $this->getConnections();
+
+        $queryCount  = count(static::$queries);
+        $uniqueCount = count(array_filter(static::$queries, static function ($query) {
+            return $query['duplicate'] === false;
+        }));
+        $connectionCount = count($this->connections);
+
+        return sprintf(
+            '(%d total Quer%s, %d %s unique across %d Connection%s)',
+            $queryCount,
+            $queryCount > 1 ? 'ies' : 'y',
+            $uniqueCount,
+            $uniqueCount > 1 ? 'of them' : '',
+            $connectionCount,
+            $connectionCount > 1 ? 's' : ''
+        );
     }
 
     /**
      * Does this collector have any data collected?
-     *
-     * @return boolean
      */
     public function isEmpty(): bool
     {
@@ -172,11 +186,17 @@ class Database extends BaseCollector
      * Display the icon.
      *
      * Icon from https://icons8.com - 1em package
-     *
-     * @return string
      */
     public function icon(): string
     {
         return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADMSURBVEhLY6A3YExLSwsA4nIycQDIDIhRWEBqamo/UNF/SjDQjF6ocZgAKPkRiFeEhoYyQ4WIBiA9QAuWAPEHqBAmgLqgHcolGQD1V4DMgHIxwbCxYD+QBqcKINseKo6eWrBioPrtQBq/BcgY5ht0cUIYbBg2AJKkRxCNWkDQgtFUNJwtABr+F6igE8olGQD114HMgHIxAVDyAhA/AlpSA8RYUwoeXAPVex5qHCbIyMgwBCkAuQJIY00huDBUz/mUlBQDqHGjgBjAwAAACexpph6oHSQAAAAASUVORK5CYII=';
+    }
+
+    /**
+     * Gets the connections from the database config
+     */
+    private function getConnections()
+    {
+        $this->connections = \Config\Database::getConnections();
     }
 }

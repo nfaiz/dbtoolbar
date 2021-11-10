@@ -8,7 +8,7 @@
     </thead>
     <tbody>
     {queries}
-        <tr>
+         <tr class="{class}" title="{hover}">
             <td class="narrow">{duration}</td>
             <td>{! sql !}</td>
         </tr>
