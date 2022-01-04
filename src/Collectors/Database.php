@@ -91,6 +91,7 @@ class Database extends BaseCollector
                 'query'     => $query,
                 'sql'       => $queryString,
                 'duplicate' => in_array($queryString, array_column(static::$queries, 'sql', null), true),
+                'trace'     => debug_backtrace(),
             ];
         }
     }
@@ -104,8 +105,7 @@ class Database extends BaseCollector
     {
         $data = [];
 
-        foreach ($this->connections as $alias => $connection)
-        {
+        foreach ($this->connections as $alias => $connection) {
             // Connection Time
             $data[] = [
                 'name'      => 'Connecting to Database: "' . $alias . '"',
