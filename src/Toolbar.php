@@ -30,13 +30,36 @@ class Toolbar
             $numRows = $query['numRows'] ?? null;
             $isDuplicate = $query['duplicate'] === true;
 
+            // Find the first line that doesn't include `system` in the backtrace
+            $line = [];
+
+            foreach ($query['trace'] as &$traceLine) {
+                // Clean up the file paths
+                $traceLine['file'] = str_ireplace(APPPATH, 'APPPATH/', $traceLine['file']);
+                $traceLine['file'] = str_ireplace(SYSTEMPATH, 'SYSTEMPATH/', $traceLine['file']);
+                if (defined('VENDORPATH')) {
+                    // VENDORPATH is not defined unless `vendor/autoload.php` exists
+                    $traceLine['file'] = str_ireplace(VENDORPATH, 'VENDORPATH/', $traceLine['file']);
+                }
+                $traceLine['file'] = str_ireplace(ROOTPATH, 'ROOTPATH/', $traceLine['file']);
+
+                if (strpos($traceLine['file'], 'SYSTEMPATH') !== false) {
+                    continue;
+                }
+                $line = empty($line) ? $traceLine : $line;
+            }
+
             $queries[] = [
-                'duration' => $duration . ' ms',
-                'sql'      => $this->highlightSql($query['sql']),
-                'numRows'  => is_int($numRows) ? number_format($numRows) : null,
-                'location' => $query['location'] ?? null,
-                'hover'    => $isDuplicate ? 'This query was called more than once.' : '',
-                'class'    => $isDuplicate ? 'duplicate' : '',
+                'hover'      => $isDuplicate ? 'This query was called more than once.' : '',
+                'class'      => $isDuplicate ? 'duplicate' : '',
+                'duration'   => $duration . ' ms',
+                'sql'        => $this->highlightSql($query['sql']),
+                'numRows'    => is_int($numRows) ? number_format($numRows) : null,
+                'location'   => $query['location'] ?? null,
+                'trace'      => $query['trace'],
+                'trace-file' => str_replace(ROOTPATH, '/', $line['file'] ?? ''),
+                'trace-line' => $line['line'] ?? '',
+                'qid'        => md5(rand() . microtime()),
             ];
 
             if (isset($this->config->logger) && $this->config->logger === true) {

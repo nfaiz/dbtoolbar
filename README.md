@@ -2,7 +2,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/nfaiz/dbtoolbar?label=size)
 ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=nfaiz/dbtoolbar)
 
-# QHighlighter
+# SQL Highlighter
 SQL Syntax Highlighter for CodeIgniter 4.
 
 ## Description
@@ -21,6 +21,9 @@ Alternative SQL Syntax Highlighter for CodeIgniter 4 Database Debug Toolbar.
 
 ## Requirement
 * [Codeigniter 4](https://github.com/codeigniter4/CodeIgniter4)
+  * v0.9.4 up to CodeIgniter v4.1.6
+  * v0.9.5 up to CodeIgniter v4.1.5
+  * v0.9.4 up to CodeIgniter v4.1.4
 * [Highlight.php](https://github.com/scrivo/highlight.php)
 
 
@@ -74,7 +77,7 @@ Refresh page to see the result.
 
 ## Configuration
 
-Open `app/Config/Toolbar.php` and add properties below. (Optional)
+Open `app/Config/Toolbar.php` add and edit properties below. (Optional)
 
 ```php
 
