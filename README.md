@@ -21,7 +21,8 @@ Alternative SQL Syntax Highlighter for CodeIgniter 4 Database Debug Toolbar.
 
 ## Requirement
 * [Codeigniter 4](https://github.com/codeigniter4/CodeIgniter4)
-  * v0.9.4 up to CodeIgniter v4.1.6
+  * v0.9.7 up to CodeIgniter v4.1.7
+  * v0.9.6 up to CodeIgniter v4.1.6
   * v0.9.5 up to CodeIgniter v4.1.5
   * v0.9.4 up to CodeIgniter v4.1.4
 * [Highlight.php](https://github.com/scrivo/highlight.php)
