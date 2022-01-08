@@ -1,9 +1,16 @@
 # Changelog
 
+## [v0.9.7](https://github.com/nfaiz/dbtoolbar/compare/v0.9.6...v0.9.7) - Not Release
+
+### Enhancement
+- Add support to CodeIgniter 4.1.7.
+
+
 ## [v0.9.6](https://github.com/nfaiz/dbtoolbar/compare/v0.9.5...v0.9.6) - 2022-01-04
 
 ### Enhancement
 - Add support to CodeIgniter 4.1.6.
+
 
 ## [v0.9.5](https://github.com/nfaiz/dbtoolbar/compare/v0.9.4...v0.9.5) - 2021-11-10
 
