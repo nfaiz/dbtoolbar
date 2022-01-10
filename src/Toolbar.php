@@ -30,23 +30,39 @@ class Toolbar
             $numRows = $query['numRows'] ?? null;
             $isDuplicate = $query['duplicate'] === true;
 
-            // Find the first line that doesn't include `system` in the backtrace
-            $line = [];
+            $firstNonSystemLine = '';
 
-            foreach ($query['trace'] as &$traceLine) {
-                // Clean up the file paths
-                $traceLine['file'] = str_ireplace(APPPATH, 'APPPATH/', $traceLine['file']);
-                $traceLine['file'] = str_ireplace(SYSTEMPATH, 'SYSTEMPATH/', $traceLine['file']);
-                if (defined('VENDORPATH')) {
-                    // VENDORPATH is not defined unless `vendor/autoload.php` exists
-                    $traceLine['file'] = str_ireplace(VENDORPATH, 'VENDORPATH/', $traceLine['file']);
+            foreach ($query['trace'] as $index => &$line) {
+                // simplify file and line
+                if (isset($line['file'])) {
+                    $line['file'] = clean_path($line['file']) . ':' . $line['line'];
+                    unset($line['line']);
+                } else {
+                    $line['file'] = '[internal function]';
                 }
-                $traceLine['file'] = str_ireplace(ROOTPATH, 'ROOTPATH/', $traceLine['file']);
 
-                if (strpos($traceLine['file'], 'SYSTEMPATH') !== false) {
-                    continue;
+                // find the first trace line that does not originate from `system/`
+                if ($firstNonSystemLine === '' && strpos($line['file'], 'SYSTEMPATH') === false) {
+                    $firstNonSystemLine = $line['file'];
                 }
-                $line = empty($line) ? $traceLine : $line;
+
+                // simplify function call
+                if (isset($line['class'])) {
+                    $line['function'] = $line['class'] . $line['type'] . $line['function'];
+                    unset($line['class'], $line['type']);
+                }
+
+                if (strrpos($line['function'], '{closure}') === false) {
+                    $line['function'] .= '()';
+                }
+
+                $line['function'] = str_repeat(chr(0xC2) . chr(0xA0), 8) . $line['function'];
+
+                // add index numbering padded with nonbreaking space
+                $indexPadded = str_pad(sprintf('%d', $index + 1), 3, ' ', STR_PAD_LEFT);
+                $indexPadded = preg_replace('/\s/', chr(0xC2) . chr(0xA0), $indexPadded);
+
+                $line['index'] = $indexPadded . str_repeat(chr(0xC2) . chr(0xA0), 4);
             }
 
             $queries[] = [
@@ -57,8 +73,7 @@ class Toolbar
                 'numRows'    => is_int($numRows) ? number_format($numRows) : null,
                 'location'   => $query['location'] ?? null,
                 'trace'      => $query['trace'],
-                'trace-file' => str_replace(ROOTPATH, '/', $line['file'] ?? ''),
-                'trace-line' => $line['line'] ?? '',
+                'trace-file' => $firstNonSystemLine,
                 'qid'        => md5(rand() . microtime()),
             ];
 
