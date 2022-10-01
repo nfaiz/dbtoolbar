@@ -1,6 +1,6 @@
 {
     "name": "nfaiz/dbtoolbar",
-    "description": "SQL Syntax Highlighter for CodeIgniter 4 Database Debug Toolbar.",
+    "description": "CodeIgniter 4 Database Debug Toolbar Query Highlighter.",
     "keywords": [
         "codeigniter",
         "codeigniter4",
@@ -21,7 +21,7 @@
     ],
     "require": {
         "scrivo/highlight.php": "^9.18",
-        "codeigniter4/framework": "^4.1"
+        "codeigniter4/framework": "^4.1.7"
     },
     "autoload": {
         "psr-4": {

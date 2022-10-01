@@ -156,7 +156,7 @@ class Toolbar
 
         if (! isset($this->config->queryTheme[$mode]) ||
             ! in_array($this->config->queryTheme[$mode], $list, true)) {
-            return $mode == 'light' ? 'default' : 'dark';
+            return $mode == 'light' ? 'vs' : 'monokai-sublime';
         }
 
         return $this->config->queryTheme[$mode];

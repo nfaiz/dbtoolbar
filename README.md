@@ -2,28 +2,21 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/nfaiz/dbtoolbar?label=size)
 ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=nfaiz/dbtoolbar)
 
-# SQL Highlighter
-SQL Syntax Highlighter for CodeIgniter 4.
+# Query Highlighter
 
 ## Description
-Alternative SQL Syntax Highlighter for CodeIgniter 4 Database Debug Toolbar.
+CodeIgniter 4 Database Debug Toolbar Query Highlighter.
 
 ## Table of contents
   * [Requirement](#requirement)
   * [Installation](#installation)
-  * [Setup Config File](#setup-config-file)
-    * [Toolbar](#toolbar)
-    * [Events](#events)
   * [Configuration](#configuration) (Optional)
+  * [Upgrading](#upgrading)
   * [ScreenShot](#screenshot)
   * [Credit](#credit)
 
-
 ## Requirement
 * [Codeigniter 4](https://github.com/codeigniter4/CodeIgniter4)
-  * For CodeIgniter v4.1.6 please use v0.9.6
-  * For CodeIgniter v4.1.5 please use v0.9.5
-  * For CodeIgniter v4.1.4 and below please use v0.9.4
 * [Highlight.php](https://github.com/scrivo/highlight.php)
 
 
@@ -32,50 +25,33 @@ Install library via composer:
 
     composer require nfaiz/dbtoolbar
 
+Query Highlighter is located at DbQueries tab (Debug Toolbar)
 
-## Setup Config File
+## Configuration
 
-* [Toolbar.php](#toolbar)
-* [Events.php](#events)
+* To remove Default Database Collector. (Optional)
 
+  * Open `app/Config/Toolbar.php` and comment `Database::class` from `$collectors` property.
 
-### Toolbar
-Open `app/Config/Toolbar.php`
-
-Replace default database collector class `Database::class` to `\Nfaiz\DbToolbar\Collectors\Database::class`
-
-```diff
+```php
 
 public $collectors = [
-    Timers::class,
--   Database::class,
-+   \Nfaiz\DbToolbar\Collectors\Database::class,
-    Logs::class,
-    Views::class,
-    // \CodeIgniter\Debug\Toolbar\Collectors\Cache::class,
-    Files::class,
-    Routes::class,
-    Events::class,
+    // Database::class,
 ];
 ```
 
-### Events
-Open `app/Config/Events.php`
+  * Open `app/Config/Events.php` and comment `Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');` event.
 
-Replace default query collector to `Events::on('DBQuery', 'Nfaiz\DbToolbar\Collectors\Database::collect');`
-
-```diff
+```php
 if (CI_DEBUG && ! is_cli()) {
-- Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
-+ Events::on('DBQuery', 'Nfaiz\DbToolbar\Collectors\Database::collect');
+  // Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
   Services::toolbar()->respond();
 }
 ```
 
+* Changing Css Theme. (Optional)
 
-## Configuration
-
-Open `app/Config/Toolbar.php` add and edit properties below. (Optional)
+  * Open `app/Config/Toolbar.php` add/edit $queryTheme.
 
 ```php
 
@@ -91,8 +67,8 @@ Open `app/Config/Toolbar.php` add and edit properties below. (Optional)
  * @var array
  */
 public $queryTheme = [
-    'light' => 'default', // atom-one-light
-    'dark'  => 'dark'
+    'light' => 'atom-one-light',
+    'dark'  => 'atom-one-dark'
 ];
 
 /**
@@ -111,12 +87,47 @@ public $queryMarginBottom = 4;
  * Log Queries
  * -------------------------------------------------------------
  *
- * Make sure to set threshold to minimum 7 at app/Config/Logger.php
+ * Please set threshold to minimum 7 at app/Config/Logger.php
  * Logs can be found at ROOTPATH/writable/logs
  *
  * @var boolean
  */
 public $logger = false;
+
+```
+
+## Upgrading
+Upgrading from 0.9.x to 1.0.0
+
+* [Toolbar.php](#toolbar)
+* [Events.php](#events)
+
+
+### Toolbar
+Open `app/Config/Toolbar.php`
+
+Remove `\Nfaiz\DbToolbar\Collectors\Database::class` from `$collectors` property.
+
+```diff
+
+public $collectors = [
+    ..
+-   \Nfaiz\DbToolbar\Collectors\Database::class,
+    ..
+];
+```
+
+### Events
+Open `app/Config/Events.php`
+
+Remove `\Nfaiz\DbToolbar\Collectors\Database::class` event.
+
+```diff
+if (CI_DEBUG && ! is_cli()) {
+  ..
+- Events::on('DBQuery', 'Nfaiz\DbToolbar\Collectors\Database::collect');
+  Services::toolbar()->respond();
+}
 ```
 
 ## Screenshot
@@ -124,26 +135,18 @@ public $logger = false;
 ### Default Database Toolbar
 
 * Light<br />
-<img src="https://user-images.githubusercontent.com/1330109/128514930-c450fef7-2008-4991-bf95-92c1acc76426.png" alt="Light mode">
+<img src="https://user-images.githubusercontent.com/1330109/193412805-a923b570-a4b1-47e6-956c-3f9f97e8c2d8.png" alt="Light mode">
 
 * Dark<br />
-<img src="https://user-images.githubusercontent.com/1330109/128515006-1acf19e3-0db4-487c-9fca-82c19670fe5e.png" alt="Dark mode">
+<img src="https://user-images.githubusercontent.com/1330109/193412939-b132801a-a639-4d1e-a57e-c2df1d628a6d.png" alt="Dark mode">
 
-### After using DbToolbar
+### Using DbToolbar
 
-* Light (using default)<br />
-<img src="https://user-images.githubusercontent.com/1330109/128515151-c1289da9-1f6a-4561-9fb8-ddb6fc8e9f0f.png" alt="Light mode">
+* Light
+<img src="https://user-images.githubusercontent.com/1330109/193412867-83603790-0c44-402b-b790-4f3d6576c412.png" alt="Light mode">
 
-* Dark (using dark)<br />
-<img src="https://user-images.githubusercontent.com/1330109/128515327-f0e6cda6-d443-4625-a44a-4dffc2caf9ee.png" alt="Dark mode">
-
-### Another example
-
-* Light (using atom-one-light)
-<img src="https://user-images.githubusercontent.com/1330109/128515815-01153f90-e140-48ed-93dc-b955d8b570e7.png" alt="Light mode">
-
-* Dark (using atom-one-dark)
-<img src="https://user-images.githubusercontent.com/1330109/128515952-39358146-0d32-42c4-a27d-80789503290b.png" alt="Dark mode">
+* Dark
+<img src="https://user-images.githubusercontent.com/1330109/193412970-faa3896e-8425-44a5-961e-ca9e553fecd9.png" alt="Dark mode">
 
 ## Credit
 * Inspired by this [pull request](https://github.com/codeigniter4/CodeIgniter4/pull/3515)

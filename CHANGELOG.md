@@ -1,5 +1,13 @@
 # Changelog
 
+
+## [v0.9.8](https://github.com/nfaiz/dbtoolbar/compare/v0.9.7...v0.9.8) - 2022-10-01
+
+### Changed
+- Add config files to skip editing Toolbar.php and Events.php manually. See upgrading in README.
+- Change default theme.
+
+
 ## [v0.9.7](https://github.com/nfaiz/dbtoolbar/compare/v0.9.6...v0.9.7) - 2022-01-22
 
 ### Enhancement

@@ -44,7 +44,7 @@ class Database extends BaseCollector
      *
      * @var string
      */
-    protected $title = 'Database';
+    protected $title = 'DBQueries';
 
     /**
      * Array of database connections.
