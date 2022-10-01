@@ -31,7 +31,7 @@ Query Highlighter is located at DbQueries tab (Debug Toolbar)
 
 * To remove Default Database Collector. (Optional)
 
-  * Open `app/Config/Toolbar.php` and comment `Database::class` from `$collectors` property.
+Open `app/Config/Toolbar.php` and comment `Database::class` from `$collectors` property.
 
 ```php
 
@@ -40,7 +40,7 @@ public $collectors = [
 ];
 ```
 
-  * Open `app/Config/Events.php` and comment `Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');` event.
+Open `app/Config/Events.php` and comment `Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');` event.
 
 ```php
 if (CI_DEBUG && ! is_cli()) {
