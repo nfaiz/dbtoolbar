@@ -29,7 +29,7 @@ Query Highlighter is located at DbQueries tab (Debug Toolbar)
 
 ## Configuration
 
-* To remove Default Database Collector. (Optional)
+### To remove Default Database Collector. (Optional)
 
 Open `app/Config/Toolbar.php` and comment `Database::class` from `$collectors` property.
 
@@ -49,7 +49,7 @@ if (CI_DEBUG && ! is_cli()) {
 }
 ```
 
-* Changing Css Theme. (Optional)
+### Changing Css Theme. (Optional)
 
   * Open `app/Config/Toolbar.php` add/edit $queryTheme.
 
