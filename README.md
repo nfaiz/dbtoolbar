@@ -29,9 +29,9 @@ Query Highlighter is located at DbQueries tab (Debug Toolbar)
 
 ## Configuration
 
-* To remove Default Database Collector. (Optional)
+### To remove Default Database Collector. (Optional)
 
-  * Open `app/Config/Toolbar.php` and comment `Database::class` from `$collectors` property.
+1. Open `app/Config/Toolbar.php` and comment `Database::class` from `$collectors` property.
 
 ```php
 
@@ -40,7 +40,7 @@ public $collectors = [
 ];
 ```
 
-  * Open `app/Config/Events.php` and comment `Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');` event.
+2. Open `app/Config/Events.php` and comment `Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');` event.
 
 ```php
 if (CI_DEBUG && ! is_cli()) {
@@ -49,9 +49,9 @@ if (CI_DEBUG && ! is_cli()) {
 }
 ```
 
-* Changing Css Theme. (Optional)
+### TO change Css Theme. (Optional)
 
-  * Open `app/Config/Toolbar.php` add/edit $queryTheme.
+Open `app/Config/Toolbar.php` add/edit $queryTheme.
 
 ```php
 
