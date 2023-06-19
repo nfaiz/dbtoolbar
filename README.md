@@ -109,8 +109,9 @@ public $logger = false;
 #### To change template view layout.
 
 Open `app/Config/Toolbar.php` and add/edit template view file using `$queryTpl` property.  
-For Example `public $queryTpl = dbtoolbar/database;` (if you are using `Views/dbtoolbar/database.php`).
+You can create your own view and you change it accordingly. For Example `public $queryTpl = dbtoolbar/database;` 
 
+Views/dbtoolbar/database.php.
 ```php
 {! hlstyle !}
 <table>
