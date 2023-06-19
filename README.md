@@ -11,7 +11,6 @@ CodeIgniter 4 Database Debug Toolbar Query Highlighter.
   * [Requirement](#requirement)
   * [Installation](#installation)
   * [Configuration](#configuration) (Optional)
-  * [Upgrading](#upgrading)
   * [ScreenShot](#screenshot)
   * [Credit](#credit)
 
@@ -49,7 +48,7 @@ if (CI_DEBUG && ! is_cli()) {
 }
 ```
 
-### To change Css Theme. (Optional)
+### To change Css Theme and Template View. (Optional)
 
 Open `app/Config/Toolbar.php` add/edit $queryTheme.
 
@@ -70,6 +69,17 @@ public $queryTheme = [
     'light' => 'atom-one-light',
     'dark'  => 'atom-one-dark'
 ];
+
+/**
+ * -------------------------------------------------------------
+ * Query View
+ * -------------------------------------------------------------
+ * 
+ * To override SQL Syntax Highlighter view.
+ *
+ * @var array
+ */
+public $queryTpl = 'Nfaiz\DbToolbar\Views\database.tpl';
 
 /**
  * -------------------------------------------------------------
@@ -96,34 +106,39 @@ public $logger = false;
 
 ```
 
-## Upgrading
-Upgrading from 0.9.7 to 0.9.8
+#### To change template view layout.
 
-* [Toolbar.php](#toolbar)
-* [Events.php](#events)
+Open `app/Config/Toolbar.php` and add/edit template view file using `$queryTpl` property.  
+You can create your own view and you change it accordingly. For Example `public $queryTpl = dbtoolbar/database;` 
 
-
-### Toolbar
-Open `app/Config/Toolbar.php` and remove `\Nfaiz\DbToolbar\Collectors\Database::class` from `$collectors` property.
-
-```diff
-
-public $collectors = [
-    ..
--   \Nfaiz\DbToolbar\Collectors\Database::class,
-    ..
-];
-```
-
-### Events
-Open `app/Config/Events.php` and remove `\Nfaiz\DbToolbar\Collectors\Database::class` event.
-
-```diff
-if (CI_DEBUG && ! is_cli()) {
-  ..
-- Events::on('DBQuery', 'Nfaiz\DbToolbar\Collectors\Database::collect');
-  Services::toolbar()->respond();
-}
+Views/dbtoolbar/database.php.
+```php
+{! hlstyle !}
+<table>
+    <thead>
+        <tr>
+            <th class="debug-bar-width6r">Time</th>
+            <th>Query String</th>
+        </tr>
+    </thead>
+    <tbody>
+    {queries}
+        <tr class="{class}" title="{hover}" data-toggle="{qid}-trace">
+            <td class="narrow" style="vertical-align: top;">{duration}</td>
+            <td><u>{trace-file}</u>{! sql !}</td>
+        </tr>
+        <tr class="muted" id="{qid}-trace" style="display:none">
+            <td></td>
+            <td>
+            {trace}
+                {index}<strong>{file}</strong><br/>
+                {function}<br/><br/>
+            {/trace}
+            </td>
+        </tr>
+    {/queries}
+    </tbody>
+</table>
 ```
 
 ## Screenshot
