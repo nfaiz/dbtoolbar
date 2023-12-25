@@ -2,18 +2,19 @@
 
 namespace Nfaiz\DbToolbar;
 
+use Config\Toolbar;
 use \Highlight\Highlighter;
 
-class Toolbar
+class DbToolbar
 {
     protected static $queries = [];
 
-    private $config;
+    private object $config;
 
     function __construct($queries)
     {
         static::$queries = $queries;
-        $this->config = config('Toolbar');
+        $this->config = config(Toolbar::class);
     }
 
     /**
@@ -26,8 +27,8 @@ class Toolbar
         $queries = [];
 
         foreach (static::$queries as $query) {
-            $duration = (float) number_format($query['query']->getDuration(5), 5) * 1000;
-            $numRows = $query['numRows'] ?? null;
+            $numRows = $query['numRows'] ?? 0;
+            $thisRepoFolder = $query['thisRepoFolder'] ?? 'this-repo-folder';
             $isDuplicate = $query['duplicate'] === true;
 
             $firstNonSystemLine = '';
@@ -42,7 +43,10 @@ class Toolbar
                 }
 
                 // find the first trace line that does not originate from `system/`
-                if ($firstNonSystemLine === '' && strpos($line['file'], 'SYSTEMPATH') === false) {
+                if ($firstNonSystemLine === '' 
+                    && strpos($line['file'], 'SYSTEMPATH') === false
+                    && strpos($line['file'], $thisRepoFolder) === false
+                ) {
                     $firstNonSystemLine = $line['file'];
                 }
 
@@ -68,16 +72,17 @@ class Toolbar
             $queries[] = [
                 'hover'      => $isDuplicate ? 'This query was called more than once.' : '',
                 'class'      => $isDuplicate ? 'duplicate' : '',
-                'duration'   => $duration . ' ms',
+                'duration'   => $query['duration'] . ' ms',
                 'sql'        => $this->highlightSql($query['sql']),
-                'numRows'    => is_int($numRows) ? number_format($numRows) : null,
-                'location'   => $query['location'] ?? null,
                 'trace'      => $query['trace'],
                 'trace-file' => $firstNonSystemLine,
                 'qid'        => md5(rand() . microtime()),
+                'numRows'    => is_int($numRows) ? number_format($numRows) : 0,
             ];
 
-            if (isset($this->config->logger) && $this->config->logger === true) {
+            if ((isset($this->config->dbToolbarLogger) && $this->config->dbToolbarLogger === true)
+                || (isset($this->config->logger) && $this->config->logger === true)
+               ) {
                 log_message('info', 'Query time: {duration}ms'. PHP_EOL . '{sql}' . PHP_EOL, [
                     'sql' => $query['sql'],
                     'duration' => $duration,
@@ -112,16 +117,18 @@ class Toolbar
      */
     public function render(array $queries): string
     {
-        if (empty($queries)) {
+        if ($queries == []) {
             return '';
         }
 
-        $data = [
-            'queries' => $queries,
-            'hlstyle' => $this->getStyle()
-        ];
+        $default = 'Nfaiz\DbToolbar\Views\database.tpl';
 
-        return service('parser')->setData($data)->render($this->config->queryTpl ?? 'Nfaiz\DbToolbar\Views\database.tpl');
+        $view = $this->config->dbToolbarTpl ?? $this->config->queryTpl ?? $default;
+
+        return service('parser')->setData([
+            'queries' => $queries,
+            'hlstyle' => $this->getStyle(),
+        ])->render($view);
     }
 
     /**
@@ -133,8 +140,10 @@ class Toolbar
     {
         $light = $this->getStyleSheetName('light');
         $dark = $this->getStyleSheetName('dark');
-        $darkStyle = str_replace('.hljs', '#toolbarContainer.dark .hljs', \HighlightUtilities\getStyleSheet($dark));
-        $style = \HighlightUtilities\getStyleSheet($light) . $darkStyle;
+        $cssDark = \HighlightUtilities\getStyleSheet($dark);
+        $cssLight = \HighlightUtilities\getStyleSheet($light);
+        $darkStyle = str_replace('.hljs', '#toolbarContainer.dark .hljs', $cssDark);
+        $style = $cssLight . $darkStyle;
         $margin = $this->getBottomMargin();
 
         return <<<STYLE
@@ -152,14 +161,20 @@ class Toolbar
      */
     public function getStyleSheetName(string $mode): string
     {
-        $list = \HighlightUtilities\getAvailableStyleSheets();
+        $list = \HighlightUtilities\getAvailableStyleSheets(); 
 
-        if (! isset($this->config->queryTheme[$mode]) ||
-            ! in_array($this->config->queryTheme[$mode], $list, true)) {
-            return $mode == 'light' ? 'vs' : 'monokai-sublime';
+        // Backward compatibility for queryTheme property
+        if (isset($this->config->queryTheme[$mode]) &&
+            in_array($this->config->queryTheme[$mode], $list, true)) {
+            return $this->config->queryTheme[$mode];
         }
 
-        return $this->config->queryTheme[$mode];
+        if (! isset($this->config->dbToolbarTheme[$mode]) ||
+            ! in_array($this->config->dbToolbarTheme[$mode], $list, true)) {
+            return $mode == 'light' ? 'default' : 'monokai-sublime';
+        }
+
+        return $this->config->dbToolbarTheme[$mode];
     }
 
     /**
@@ -169,11 +184,17 @@ class Toolbar
      */
     private function getBottomMargin(): int
     {
-        if (! isset($this->config->queryMarginBottom) ||
-            ! is_numeric($this->config->queryMarginBottom)) {
+        // Backward compatibility for queryTheme property
+        if (isset($this->config->queryMarginBottom) &&
+            is_numeric($this->config->queryMarginBottom)) {
             return 4;
         }
 
-        return $this->config->queryMarginBottom;
+        if (! isset($this->config->dbToolbarMarginBottom) ||
+            ! is_numeric($this->config->dbToolbarMarginBottom)) {
+            return 4;
+        }
+
+        return $this->config->dbToolbarMarginBottom;
     }
 }

@@ -28,18 +28,18 @@ Query Highlighter is located at DbQueries tab (Debug Toolbar)
 
 ## Configuration
 
-### To remove Default Database Collector.
+### Remove Default Database Tab
 
-1. Open `app/Config/Toolbar.php` and comment `Database::class` from `$collectors` property.
+1. Open and comment `Database::class` from `$collectors` property in `app/Config/Toolbar.php`.
 
 ```php
 
-public $collectors = [
+public array $collectors = [
     // Database::class,
 ];
 ```
 
-2. Open `app/Config/Events.php` and comment `Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');` event.
+2. Open and comment `Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');` in `app/Config/Events.php`.
 
 ```php
 if (CI_DEBUG && ! is_cli()) {
@@ -48,15 +48,26 @@ if (CI_DEBUG && ! is_cli()) {
 }
 ```
 
-### To change Css Theme and Template View. (Optional)
+### Modify Settings.
 
-Open `app/Config/Toolbar.php` add/edit $queryTheme.
+Open and add properties below in `app/Config/Toolbar.php` accordingly.
 
 ```php
 
 /**
  * -------------------------------------------------------------
- * Query Theme
+ * Disable DbToolbar query Highlighter
+ * -------------------------------------------------------------
+ * 
+ * To disable DbToolbar query highlighter, change value to true
+ *
+ * @var bool
+ */
+public bool $dbToolbarDisable = false;
+
+/**
+ * -------------------------------------------------------------
+ * DbToolbar Theme
  * -------------------------------------------------------------
  * 
  * Configuration for light and dark mode SQL Syntax Highlighter.
@@ -65,21 +76,21 @@ Open `app/Config/Toolbar.php` add/edit $queryTheme.
  *
  * @var array
  */
-public $queryTheme = [
+public array $dbToolbarTheme = [
     'light' => 'atom-one-light',
     'dark'  => 'atom-one-dark'
 ];
 
 /**
  * -------------------------------------------------------------
- * Query View
+ * DbToolbar View
  * -------------------------------------------------------------
  * 
- * To override SQL Syntax Highlighter view.
+ * To override DbToolbar SQL Syntax Highlighter view.
  *
  * @var array
  */
-public $queryTpl = 'Nfaiz\DbToolbar\Views\database.tpl';
+public string $dbToolbarTpl = 'Nfaiz\DbToolbar\Views\database.tpl';
 
 /**
  * -------------------------------------------------------------
@@ -90,7 +101,7 @@ public $queryTpl = 'Nfaiz\DbToolbar\Views\database.tpl';
  * 
  * @var int
  */
-public $queryMarginBottom = 4;
+public int $dbToolbarMarginBottom = 4;
 
 /**
  * -------------------------------------------------------------
@@ -102,14 +113,14 @@ public $queryMarginBottom = 4;
  *
  * @var boolean
  */
-public $logger = false;
+public bool $dbToolbarLogger = false;
 
 ```
 
-#### To change template view layout.
+#### Custom Syntax Highlighter view.
 
-Open `app/Config/Toolbar.php` and add/edit template view file using `$queryTpl` property.  
-You can create your own view and you change it accordingly. For Example `public $queryTpl = dbtoolbar/database;` 
+Open `app/Config/Toolbar.php` and add/edit template view file using `$dbToolbarTpl` property.  
+You can create your own view and you change it accordingly. For Example `public $dbToolbarTpl = dbtoolbar/database;` 
 
 Views/dbtoolbar/database.php.
 ```php
