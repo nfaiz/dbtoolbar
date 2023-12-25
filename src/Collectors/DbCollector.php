@@ -2,21 +2,19 @@
 
 /**
  * This file is not part of the CodeIgniter 4 framework.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  */
 
 namespace Nfaiz\DbToolbar\Collectors;
 
 use CodeIgniter\Debug\Toolbar\Collectors\BaseCollector;
 use CodeIgniter\Database\Query;
-use Nfaiz\DbToolbar\Toolbar;
+use Nfaiz\DbToolbar\DbToolbar;
+use Config\Toolbar;
 
 /**
  * Collector for the Database tab of the Debug Toolbar.
  */
-class Database extends BaseCollector
+class DbCollector extends BaseCollector
 {
     /**
      * Whether this collector has timeline data.
@@ -44,7 +42,7 @@ class Database extends BaseCollector
      *
      * @var string
      */
-    protected $title = 'DBQueries';
+    protected $title = 'Queries';
 
     /**
      * Array of database connections.
@@ -79,7 +77,7 @@ class Database extends BaseCollector
      */
     public static function collect(Query $query)
     {
-        $config = config('Toolbar');
+        $config = config(Toolbar::class);
 
         // Provide default in case it's not set
         $max = $config->maxQueries ?: 100;
@@ -96,10 +94,12 @@ class Database extends BaseCollector
             }
 
             static::$queries[] = [
-                'query'     => $query,
-                'sql'       => $queryString,
-                'duplicate' => in_array($queryString, array_column(static::$queries, 'sql', null), true),
-                'trace'     => $backtrace,
+                'query'         => $query,
+                'sql'           => $queryString,
+                'duplicate'     => in_array($queryString, array_column(static::$queries, 'sql', null), true),
+                'trace'         => $backtrace,
+                'duration'      => (float) number_format($query->getDuration(5), 5) * 1000,
+                'thisRepoFolder'=> 'dbtoolbar',
             ];
         }
     }
@@ -143,9 +143,8 @@ class Database extends BaseCollector
      */
     public function display(): string
     {
-        $toolbar = new Toolbar(static::$queries);
-
-        return $toolbar->display();
+        $dbToolbar = new DbToolbar(static::$queries);
+        return $dbToolbar->display();
     }
 
     /**
@@ -197,7 +196,7 @@ class Database extends BaseCollector
      */
     public function icon(): string
     {
-        return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADMSURBVEhLY6A3YExLSwsA4nIycQDIDIhRWEBqamo/UNF/SjDQjF6ocZgAKPkRiFeEhoYyQ4WIBiA9QAuWAPEHqBAmgLqgHcolGQD1V4DMgHIxwbCxYD+QBqcKINseKo6eWrBioPrtQBq/BcgY5ht0cUIYbBg2AJKkRxCNWkDQgtFUNJwtABr+F6igE8olGQD114HMgHIxAVDyAhA/AlpSA8RYUwoeXAPVex5qHCbIyMgwBCkAuQJIY00huDBUz/mUlBQDqHGjgBjAwAAACexpph6oHSQAAAAASUVORK5CYII=';
+        return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAACgklEQVR4nO2ay2oUQRSGP0FBN3FmXCdmFaPxATS6EMnGB9DoC0SD8waarREJqDt1IS69QkhcCMkYTOIzCK7EhRcyDAluEsWMFPwNRTNkqmequytSP9Rius91uqr/U6ca+sdJ4BowAzwD1oHPwFegBfzRaOmaubcm2RnpjlICjgHTwCvgB9D2NIytl8AN+cgNl4A3wE4qgJ/APHAPmAIu6h8+DlSBQxpVXRuVzJR05mXDtrkjX8anN5zVdEmc/AWW9M+d8uTjgGxNA8vykfhbVww94wjwBNiVwSZwGxgkfwxq/TTl28TwEDiY1dCA9RS2gTvAUYpHBZi1pvM7xeb8mN9a8/8c5eO8tY4WFWNXXJXCL2CEcDCimExsV1wUViRsFl5ouKnYGi7CWxI28zM0VBXbpotwO+BEalZ8XZEImscYGuq9JBLyYm+7KNilwgZwgfIx3qGu64pEcNmqe2ZLWjMV4K5FiEu9JGLKgQfW76bKhqH842coVaKYcV8xZU4kgWH2j6misaGXwZgry3aBsXFaNt93KBrH94jPOZEEpqR+rdorvY4WgDlVxBOqZIc7lPHDSn5CsnPS3UjZ3JavTmV834nY7/LrwAvgu8eN1TfgufYptT7iyy4onFB9dgt4CqwCn4Av2t7+1mjpmrn3QbJGZzLja76dNZHI7DmiHpmdyOxeUInMTmR2IrMTmX1vRGYvAPXI7ERm94JKZHYisxOZnZyYfSvjVrfIPXstSzd+ZR80sRsuwpP7oIl92bXrt2idIZrzu5DOEBeydDcH9JlFaE3s1SynuvY5++PUOXtZTexd4BFw2PeXD0U2sdeAM3hEKE1sbyi7iZ0bim5i81/jHwn5KgDx2BeAAAAAAElFTkSuQmCC';
     }
 
     /**

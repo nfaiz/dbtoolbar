@@ -1,10 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Nfaiz\DbToolbar\Config;
 
-Use Nfaiz\DbToolbar\Collectors\Database;
+Use Nfaiz\DbToolbar\Collectors\DbCollector;
 
 class Registrar
 {
@@ -12,7 +10,7 @@ class Registrar
     {
         return [
             'collectors' => [
-                Database::class,
+                DbCollector::class,
             ],
         ];
     }

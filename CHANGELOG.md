@@ -1,5 +1,23 @@
 # Changelog
 
+## [v1.0.0](https://github.com/nfaiz/dbtoolbar/compare/v1.0.0...v0.9.8) - 2023-12-25
+
+### Changed
+- Refactor Code
+- Add new property `dbToolbarDisable` in `app/Config/Toolbar.php` to enable/disable DbToolbar
+- Change property name in `app/Config/Toolbar.php` from
+1. `$queryTheme` to `$dbToolbarTheme
+2. `$queryTpl` to `$dbToolbarTpl`
+3. `$queryMarginBottom` to `$dbToolbarMarginBottom`
+4. `$logger` to `$dbToolbarLogger`
+
+### Deprecated
+- Property
+1. `$queryTheme`
+2. `$queryTpl`
+3. `$queryMarginBottom`
+4. `$logger`
+
 
 ## [v0.9.8](https://github.com/nfaiz/dbtoolbar/compare/v0.9.7...v0.9.8) - 2022-10-01
 
