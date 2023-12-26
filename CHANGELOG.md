@@ -1,6 +1,6 @@
 # Changelog
 
-## [v1.0.0](https://github.com/nfaiz/dbtoolbar/compare/v1.0.0...v0.9.8) - 2023-12-25
+## [v1.0.0](https://github.com/nfaiz/dbtoolbar/compare/v0.9.8...v1.0.0) - 2023-12-25
 
 ### Changed
 - Refactor Code
