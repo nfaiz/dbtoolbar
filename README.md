@@ -138,7 +138,7 @@ Views/dbtoolbar/database.php.
             <td class="narrow" style="vertical-align: top;">{duration}</td>
             <td><u>{trace-file}</u>{! sql !}</td>
         </tr>
-        <tr class="muted" id="{qid}-trace" style="display:none">
+        <tr class="muted debug-bar-ndisplay" id="{qid}-trace">
             <td></td>
             <td>
             {trace}
